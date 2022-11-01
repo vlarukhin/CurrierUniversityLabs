@@ -34,6 +34,16 @@ namespace ConsoleApp1
                 " Находится в {3}",
                 Name, Speed, CarryingCapacity, InitialLocation.ToString());
         }
+
+        internal void AcceptPlan(PlanningOption planningOption)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal PlanningOption RequestPlanningOption(Order order)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     internal class FootCurier : Curier

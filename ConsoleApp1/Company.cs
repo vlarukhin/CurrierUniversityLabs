@@ -15,9 +15,12 @@ namespace ConsoleApp1
         public const double DefaultMobileCurierSpeed = 8;
 
 
-        public static HashSet<Curier> Curiers { get; set; } = new HashSet<Curier>();
 
-        public static Queue<Order> Orders { get; set; } = new Queue<Order>();
+        public HashSet<Curier> Curiers { get; set; } = new HashSet<Curier>();
+
+        public Queue<Order> OrdersQueue { get; set; } = new Queue<Order>();
+
+        public HashSet<Order> Orders { get; set; } = new HashSet<Order>();
 
         public void PrintOrders()
         {
@@ -33,6 +36,54 @@ namespace ConsoleApp1
             {
                 Console.WriteLine(curier.GetInfo());
             }
+        }
+
+
+        public void StartPlaner()
+        {
+            PrepaireQueue();
+            PlanningCycle();
+        }
+
+
+        private void PrepaireQueue()
+        {
+            var sortedOrders = Orders.OrderByDescending(x => x.OrderPrice);
+
+            foreach(var order in sortedOrders)
+            {
+                OrdersQueue.Enqueue(order);
+            }
+        }
+
+        private void PlanningCycle()
+        {
+            var totalProfit = 0.0;
+
+            while(OrdersQueue.Count >0)
+            {
+                var orderForPlanning = OrdersQueue.Dequeue();
+
+                Console.WriteLine($"Планируется заказ: {orderForPlanning.GetInfo()}");
+                Console.WriteLine();
+
+                var result = orderForPlanning.PlanOrder();
+
+                if (result)
+                {
+                    totalProfit += orderForPlanning.CurrentPlan.Profit;
+
+                    Console.WriteLine($"Заказ запланирован: " +
+                        $"{orderForPlanning.CurrentPlan.Curier.ToString()}" +
+                        $" c прибылью: {orderForPlanning.CurrentPlan.Profit}");
+                }
+                else
+                {
+                    Console.WriteLine($"Заказ не запланирован");
+                }
+            }
+
+            Console.WriteLine($"Итоговая прибыль: {totalProfit}");
         }
     }
 }

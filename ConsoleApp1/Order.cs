@@ -11,7 +11,7 @@ namespace ConsoleApp1
     /// </summary>
     internal class Order
     {
-        public Location FromLocation { get; set; }  
+        public Location FromLocation { get; set; }
 
         public Location ToLocation { get; set; }
 
@@ -24,6 +24,8 @@ namespace ConsoleApp1
 
         public double OrderPrice { get { return GetOrderPrice(); } }
 
+        public PlanningOption CurrentPlan { get; private set; }
+
         private double GetOrderPrice()
         {
             return OrderDistance * Company.PricePerDistance;
@@ -35,23 +37,70 @@ namespace ConsoleApp1
                 $" ({OrderDistance} км) | {OrderPrice}";
         }
 
-        public List<Curier> CurriersForOrder()
+        public bool PlanOrder()
         {
-            var list = new List<Curier>();
+            //Подбираем подходящих курьеров
+            var curriers = FindCurriers();
 
-            var list2 = Company.Curiers.Where(cur => cur.CanCarry(this));
+            //Готовим место для ответов
+            var planningOptions = new List<PlanningOption>();
 
-            foreach (var currer in Company.Curiers)
+            foreach (var currier in curriers)
             {
-                if (currer.CanCarry(this))
+                //Спрашиваем курьреа о варианте планирования
+                var planningOption = currier.RequestPlanningOption(this);
+
+                if (planningOption != null)
                 {
-                    list.Add(currer);
+                    planningOptions.Add(planningOption);
                 }
             }
 
-            return list2.ToList();
+            if (planningOptions.Count() > 0)
+            {
+                //Анализируем и выбираем
+                var bestOption = GetBestOption(planningOptions);
 
+                if (bestOption != null)
+                {
+                    bestOption.Curier.AcceptPlan(bestOption);
+                    this.CurrentPlan = bestOption;
+                }
+            }
 
+            return false;
         }
+
+        private IList<Curier> FindCurriers()
+        {
+            throw new NotImplementedException();
+        }
+
+        private PlanningOption GetBestOption(IList<PlanningOption> options)
+        {
+            var sortedOption = options.OrderByDescending(option => option.Profit);
+            var bestOption = sortedOption.FirstOrDefault(bestOption => bestOption.Profit > 0);
+
+            return bestOption;
+        }
+
+        //public List<Curier> CurriersForOrder()
+        //{
+        //    var list = new List<Curier>();
+
+        //    var list2 = Company.Curiers.Where(cur => cur.CanCarry(this));
+
+        //    foreach (var currer in Company.Curiers)
+        //    {
+        //        if (currer.CanCarry(this))
+        //        {
+        //            list.Add(currer);
+        //        }
+        //    }
+
+        //    return list2.ToList();
+
+
+        //}
     }
 }

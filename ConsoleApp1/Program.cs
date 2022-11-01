@@ -71,35 +71,36 @@ namespace ConsoleApp1
 
 
             var company = new Company();
-            Company.Curiers.Add(currier1);
-            Company.Curiers.Add(currier2);
-            Company.Curiers.Add(currier3);
-            Company.Curiers.Add(currier4);
+            company.Curiers.Add(currier1);
+            company.Curiers.Add(currier2);
+            company.Curiers.Add(currier3);
+            company.Curiers.Add(currier4);
 
-            Company.Orders.Enqueue(order1);
-            Company.Orders.Enqueue(order2);
-            Company.Orders.Enqueue(order3);
-            Company.Orders.Enqueue(order4);
-            Company.Orders.Enqueue(order5);
+            company.Orders.Add(order1);
+            company.Orders.Add(order2);
+            company.Orders.Add(order3);
+            company.Orders.Add(order4);
+            company.Orders.Add(order5);
 
             company.PrintOrders();
+            Console.WriteLine();
             company.PrintCuriers();
 
-            var c = Company.Curiers.OrderBy(x => x.CarryingCapacity);
+            company.StartPlaner();
 
-            foreach (var order in Company.Orders)
-            {
-                var list = order.CurriersForOrder();
+            //foreach (var order in Company.Orders)
+            //{
+            //    var list = order.CurriersForOrder();
 
-                Console.WriteLine(order.GetInfo());
+            //    Console.WriteLine(order.GetInfo());
 
-                foreach (var cur in list)
-                {
-                    Console.WriteLine(cur.GetInfo());
-                }
+            //    foreach (var cur in list)
+            //    {
+            //        Console.WriteLine(cur.GetInfo());
+            //    }
 
-                Console.WriteLine("====");
-            }
+            //    Console.WriteLine("====");
+            //}
 
             Console.ReadKey();
         }
