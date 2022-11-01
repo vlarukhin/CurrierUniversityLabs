@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-    internal abstract class Curier
+    internal abstract class Curier : IComparable<Curier>
     {
         public string Name { get; set; }
 
@@ -21,7 +21,10 @@ namespace ConsoleApp1
             return CarryingCapacity >= order.Weigth;
         }
 
-        
+        public int CompareTo(Curier? other)
+        {
+            return (int)(other != null ? CarryingCapacity - other.CarryingCapacity : -1); ;
+        }
 
         public string GetInfo()
         {

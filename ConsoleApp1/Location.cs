@@ -51,10 +51,10 @@ namespace ConsoleApp1
     {
         public static double GetDistance(this Location from, Location destination)
         {
-            return Math.Pow(
+            return Math.Round(Math.Pow(
                 Math.Pow(destination.XCoord - from.XCoord, 2)
                 + Math.Pow(destination.YCoord - from.YCoord, 2)
-                , 0.5);
+                , 0.5),2);
         }
     }
 }

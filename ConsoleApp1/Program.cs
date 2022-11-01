@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using System;
+using System.Security.Cryptography.X509Certificates;
 
 namespace ConsoleApp1
 {
@@ -27,11 +28,15 @@ namespace ConsoleApp1
                 CarryingCapacity = 8
             };
 
-            Console.WriteLine(currier1.GetInfo());
-            Console.WriteLine(currier2.GetInfo());
-            Console.WriteLine(currier3.GetInfo());
+            var currier4 = new
+                MobileCurier
+            {
+                Name = "Нина",
+                InitialLocation = Location.Create(3, 3),
+                CarryingCapacity = 2
+            };
 
-            var order1 = new Order {
+                        var order1 = new Order {
                 FromLocation = Location.Create(3, 3),
                 ToLocation = Location.Create(2, 2),
                 Weigth = 5 };
@@ -43,10 +48,58 @@ namespace ConsoleApp1
                 Weigth = 10
             };
 
-            Console.WriteLine($"К1 -> З1 {currier1.CanCarry(order1)}");
-            Console.WriteLine($"К1 -> З2 {currier1.CanCarry(order2)}");
-            Console.WriteLine($"К2 -> З1 {currier2.CanCarry(order1)}");
-            Console.WriteLine($"К2 -> З2 {currier2.CanCarry(order2)}");
+            var order3 = new Order
+            {
+                FromLocation = Location.Create(1, 5),
+                ToLocation = Location.Create(1, 1),
+                Weigth = 3
+            };
+
+            var order4 = new Order
+            {
+                FromLocation = Location.Create(2, 2),
+                ToLocation = Location.Create(3, 3),
+                Weigth = 3
+            };
+
+            var order5 = new Order
+            {
+                FromLocation = Location.Create(1, 5),
+                ToLocation = Location.Create(5, 1),
+                Weigth = 10
+            };
+
+
+            var company = new Company();
+            Company.Curiers.Add(currier1);
+            Company.Curiers.Add(currier2);
+            Company.Curiers.Add(currier3);
+            Company.Curiers.Add(currier4);
+
+            Company.Orders.Enqueue(order1);
+            Company.Orders.Enqueue(order2);
+            Company.Orders.Enqueue(order3);
+            Company.Orders.Enqueue(order4);
+            Company.Orders.Enqueue(order5);
+
+            company.PrintOrders();
+            company.PrintCuriers();
+
+            var c = Company.Curiers.OrderBy(x => x.CarryingCapacity);
+
+            foreach (var order in Company.Orders)
+            {
+                var list = order.CurriersForOrder();
+
+                Console.WriteLine(order.GetInfo());
+
+                foreach (var cur in list)
+                {
+                    Console.WriteLine(cur.GetInfo());
+                }
+
+                Console.WriteLine("====");
+            }
 
             Console.ReadKey();
         }

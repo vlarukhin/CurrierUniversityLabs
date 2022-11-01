@@ -28,5 +28,30 @@ namespace ConsoleApp1
         {
             return OrderDistance * Company.PricePerDistance;
         }
+
+        public string GetInfo()
+        {
+            return $"Заказ {FromLocation.ToString()} -> {ToLocation.ToString()}" +
+                $" ({OrderDistance} км) | {OrderPrice}";
+        }
+
+        public List<Curier> CurriersForOrder()
+        {
+            var list = new List<Curier>();
+
+            var list2 = Company.Curiers.Where(cur => cur.CanCarry(this));
+
+            foreach (var currer in Company.Curiers)
+            {
+                if (currer.CanCarry(this))
+                {
+                    list.Add(currer);
+                }
+            }
+
+            return list2.ToList();
+
+
+        }
     }
 }
