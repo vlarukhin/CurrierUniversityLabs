@@ -124,7 +124,10 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
         /// <returns>Список подходящих курьеров</returns>        
         private IList<Curier> FindCurriers()
         {
-            throw new NotImplementedException();
+            var curriers = Company.CompanyInstance.GetAvailibleCurriers()
+                                .Where(x=>x.CanCarry(this));
+
+            return curriers.ToList();
         }
 
         /// <summary>

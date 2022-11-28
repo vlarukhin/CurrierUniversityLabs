@@ -33,6 +33,11 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
         public double Speed { get; set; }
 
         /// <summary>
+        /// Стоимость курьреа
+        /// </summary>
+        public double CurreierPrice { get; set; }
+
+        /// <summary>
         /// Проверяет, может ли курьер выполнить Заказ
         /// </summary>
         /// <param name="order">Заказ на перемещение неоторого груза</param>
@@ -61,7 +66,7 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
         /// <param name="planningOption">Вариант размещения заказа в плане курьера</param>        
         internal void AcceptPlanAction(PlanningOption planningOption)
         {
-            throw new NotImplementedException();
+            ScheduledOrder.AddLast(planningOption.Order);
         }
 
         /// <summary>
@@ -71,8 +76,22 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
         /// <returns>Вариант размещения, включающий оценки</returns>        
         internal PlanningOption RequestPlanningOptionAction(Order order)
         {
-            throw new NotImplementedException();
+            var planningOption = new PlanningOption();
+
+            var currentCurrierLocation =  ScheduledOrder.LastOrDefault()?.ToLocation ?? InitialLocation;
+
+            var distance = currentCurrierLocation.GetDistance(order.FromLocation) + order.OrderDistance;
+            var currierCost = distance * this.CurreierPrice;
+
+            planningOption.Curier = this;
+            planningOption.Order = order;
+            planningOption.Price = currierCost;
+
+            return planningOption;
         }
+
+
+        private LinkedList<Order> ScheduledOrder = new LinkedList<Order>();
     }
     /// <summary>
     /// Пеший курьер
@@ -82,6 +101,7 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
         public FootCurier()
         {
             Speed = Company.DefaultFootCurierSpeed;
+            CurreierPrice = Company.PricePerDistance * 0.65;
         }
     }
 
@@ -93,6 +113,7 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
         public MobileCurier()
         {
             Speed = Company.DefaultMobileCurierSpeed;
+            CurreierPrice = Company.PricePerDistance * 0.85;
         }
     }
 

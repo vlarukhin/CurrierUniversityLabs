@@ -38,7 +38,7 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
         /// Получает множество доступных на текущий момент курьеров
         /// </summary>
         /// <returns>Множество доступных курьеров</returns>
-        public HashSet<Curier> GetAvailibleCuuriers()
+        public HashSet<Curier> GetAvailibleCurriers()
         {
             return Curiers;
         }
