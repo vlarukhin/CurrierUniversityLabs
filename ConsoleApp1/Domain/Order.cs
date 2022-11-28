@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleApp1
+namespace SimpleCurriersSchedulerStudyApp.Domain
 {
     /// <summary>
     /// Базовый заказ
@@ -64,7 +64,7 @@ namespace ConsoleApp1
                 if (bestOption != null)
                 {
                     bestOption.Curier.AcceptPlan(bestOption);
-                    this.CurrentPlan = bestOption;
+                    CurrentPlan = bestOption;
                 }
             }
 

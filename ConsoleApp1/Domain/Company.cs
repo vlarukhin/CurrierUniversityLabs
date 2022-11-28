@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleApp1
+namespace SimpleCurriersSchedulerStudyApp.Domain
 {
     internal class Company
     {
@@ -24,7 +24,7 @@ namespace ConsoleApp1
 
         public void PrintOrders()
         {
-            foreach(var order in Orders)
+            foreach (var order in Orders)
             {
                 Console.WriteLine(order.GetInfo());
             }
@@ -50,7 +50,7 @@ namespace ConsoleApp1
         {
             var sortedOrders = Orders.OrderByDescending(x => x.OrderPrice);
 
-            foreach(var order in sortedOrders)
+            foreach (var order in sortedOrders)
             {
                 OrdersQueue.Enqueue(order);
             }
@@ -60,7 +60,7 @@ namespace ConsoleApp1
         {
             var totalProfit = 0.0;
 
-            while(OrdersQueue.Count >0)
+            while (OrdersQueue.Count > 0)
             {
                 var orderForPlanning = OrdersQueue.Dequeue();
 

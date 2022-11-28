@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleApp1
+namespace SimpleCurriersSchedulerStudyApp.Domain
 {
     internal class PlanningOption
     {
@@ -17,7 +17,7 @@ namespace ConsoleApp1
         public double Profit
         {
             get
-            { 
+            {
                 return Order.OrderPrice - Price;
             }
         }
