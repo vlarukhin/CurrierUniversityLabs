@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Security.Cryptography.X509Certificates;
+using SimpleCurriersSchedulerStudyApp.Domain;
 
-namespace ConsoleApp1
+namespace SimpleCurriersSchedulerStudyApp
 {
     internal class Program
     {
         static void Main(string[] args)
         {
             var currier1 = new
-                FootCurier {Name = "Вася", 
-                InitialLocation = Location.Create(5,5),
-                CarryingCapacity = 5  };
+                FootCurier
+            {
+                Name = "Вася",
+                InitialLocation = Location.Create(5, 5),
+                CarryingCapacity = 5
+            };
 
             var currier2 = new
                 FootCurier
@@ -36,10 +40,12 @@ namespace ConsoleApp1
                 CarryingCapacity = 2
             };
 
-                        var order1 = new Order {
+            var order1 = new Order
+            {
                 FromLocation = Location.Create(3, 3),
                 ToLocation = Location.Create(2, 2),
-                Weigth = 5 };
+                Weigth = 5
+            };
 
             var order2 = new Order
             {
@@ -69,8 +75,7 @@ namespace ConsoleApp1
                 Weigth = 10
             };
 
-
-            var company = new Company();
+            var company = Company.CompanyInstance;
             company.Curiers.Add(currier1);
             company.Curiers.Add(currier2);
             company.Curiers.Add(currier3);
@@ -87,20 +92,6 @@ namespace ConsoleApp1
             company.PrintCuriers();
 
             company.StartPlaner();
-
-            //foreach (var order in Company.Orders)
-            //{
-            //    var list = order.CurriersForOrder();
-
-            //    Console.WriteLine(order.GetInfo());
-
-            //    foreach (var cur in list)
-            //    {
-            //        Console.WriteLine(cur.GetInfo());
-            //    }
-
-            //    Console.WriteLine("====");
-            //}
 
             Console.ReadKey();
         }

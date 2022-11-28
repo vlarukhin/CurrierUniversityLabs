@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleApp1
+namespace SimpleCurriersSchedulerStudyApp.Domain
 {
     /// <summary>
     /// Это локация (точка в пространстве)
@@ -35,7 +35,7 @@ namespace ConsoleApp1
             XCoord = xCoord;
             YCoord = yCoord;
         }
-        
+
         public static Location Create(int xCoord, int yCoord)
         {
             return new Location(xCoord, yCoord);
@@ -54,7 +54,7 @@ namespace ConsoleApp1
             return Math.Round(Math.Pow(
                 Math.Pow(destination.XCoord - from.XCoord, 2)
                 + Math.Pow(destination.YCoord - from.YCoord, 2)
-                , 0.5),2);
+                , 0.5), 2);
         }
     }
 }
