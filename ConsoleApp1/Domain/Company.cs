@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SimpleCurriersSchedulerStudyApp.Domain
 {
+    /// <summary>
+    /// Курьерская компания, которая выполняет заказы на перевозку грузов своими курьерами
+    /// </summary>
     internal class Company
     {
         public const double PricePerDistance = 100;
@@ -15,13 +18,35 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
         public const double DefaultMobileCurierSpeed = 8;
 
 
-
+        /// <summary>
+        /// Курьеры
+        /// </summary>
         public HashSet<Curier> Curiers { get; set; } = new HashSet<Curier>();
 
+        /// <summary>
+        /// Очередь поступающих заказов
+        /// </summary>
         public Queue<Order> OrdersQueue { get; set; } = new Queue<Order>();
 
+        /// <summary>
+        /// Заказы компании
+        /// </summary>
         public HashSet<Order> Orders { get; set; } = new HashSet<Order>();
 
+
+        /// <summary>
+        /// Получает множество доступных на текущий момент курьеров
+        /// </summary>
+        /// <returns>Множество доступных курьеров</returns>
+        public HashSet<Curier> GetAvailibleCuuriers()
+        {
+            return Curiers;
+        }
+
+        /// <summary>
+        /// Отображает заказы в консоли
+        /// </summary>
+        //TODO: Вынести метод - не относится к предметной логике
         public void PrintOrders()
         {
             foreach (var order in Orders)
@@ -30,6 +55,10 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
             }
         }
 
+        /// <summary>
+        /// Отображает курьров в консоли
+        /// </summary>
+        //TODO: Вынести метод - не относится к предметной логике
         public void PrintCuriers()
         {
             foreach (var curier in Curiers)
@@ -38,15 +67,19 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
             }
         }
 
-
+        /// <summary>
+        /// Запускает цикл планирования заказов
+        /// </summary>
         public void StartPlaner()
         {
-            PrepaireQueue();
+            PrepareQueue();
             PlanningCycle();
         }
 
-
-        private void PrepaireQueue()
+        /// <summary>
+        /// Подготовка очереди заказов к планирования
+        /// </summary>
+        private void PrepareQueue()
         {
             var sortedOrders = Orders.OrderByDescending(x => x.OrderPrice);
 
@@ -56,6 +89,9 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
             }
         }
 
+        /// <summary>
+        /// Реализация цикла планирования заказов
+        /// </summary>
         private void PlanningCycle()
         {
             var totalProfit = 0.0;
@@ -85,5 +121,26 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
 
             Console.WriteLine($"Итоговая прибыль: {totalProfit}");
         }
-    }
+
+        /// <summary>
+        /// Экземпляр компании (внутренее поле)
+        /// </summary>
+        private static Company _instance;
+
+        /// <summary>
+        /// Экземпляр компании
+        /// </summary>
+        public static Company CompanyInstance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new Company();
+                }
+
+                return _instance;
+            }
+        }
+    }    
 }

@@ -75,8 +75,7 @@ namespace SimpleCurriersSchedulerStudyApp
                 Weigth = 10
             };
 
-
-            var company = new Company();
+            var company = Company.CompanyInstance;
             company.Curiers.Add(currier1);
             company.Curiers.Add(currier2);
             company.Curiers.Add(currier3);
@@ -93,20 +92,6 @@ namespace SimpleCurriersSchedulerStudyApp
             company.PrintCuriers();
 
             company.StartPlaner();
-
-            //foreach (var order in Company.Orders)
-            //{
-            //    var list = order.CurriersForOrder();
-
-            //    Console.WriteLine(order.GetInfo());
-
-            //    foreach (var cur in list)
-            //    {
-            //        Console.WriteLine(cur.GetInfo());
-            //    }
-
-            //    Console.WriteLine("====");
-            //}
 
             Console.ReadKey();
         }
