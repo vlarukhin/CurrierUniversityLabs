@@ -7,100 +7,137 @@ using System.Threading.Tasks;
 namespace SimpleCurriersSchedulerStudyApp.Domain
 {
     /// <summary>
-    /// Базовый заказ
+    /// Базовый заказ на перемещение груза, который может быть выполнен курьером
     /// </summary>
     internal class Order
     {
+        /// <summary>
+        /// Отправная точка заказа
+        /// </summary>
         public Location FromLocation { get; set; }
 
+        /// <summary>
+        /// Пункт назначения заказа
+        /// </summary>
         public Location ToLocation { get; set; }
 
+        /// <summary>
+        /// Вес посылки
+        /// </summary>
         public double Weigth { get; set; }
 
+        /// <summary>
+        /// Расстояние, на которое необходимо переместить посылку
+        /// </summary>
         public double OrderDistance
         {
             get { return FromLocation.GetDistance(ToLocation); }
         }
 
-        public double OrderPrice { get { return GetOrderPrice(); } }
+        /// <summary>
+        /// Базовая стоимость заказа
+        /// </summary>
+        public double OrderPrice
+        {
+            get
+            {
+                return GetOrderPrice();
+            }
+        }
 
+        /// <summary>
+        /// Текущий вариант исполнения Заказа
+        /// </summary>
         public PlanningOption CurrentPlan { get; private set; }
 
+        /// <summary>
+        /// Определяет, что заказ запланирован
+        /// </summary>
+        public bool IsPlanned { get { return CurrentPlan != null; } }
+
+        /// <summary>
+        /// Выполняет расчет стоимости Заказа по тарифу Компании
+        /// </summary>
+        /// <returns>Стоимость выполнения заказа по тарифу компании</returns>
         private double GetOrderPrice()
         {
             return OrderDistance * Company.PricePerDistance;
         }
 
+        /// <summary>
+        /// Формирует строковое представление с описанием Заказа
+        /// </summary>
+        /// <returns>Строка, содержащая информацию о Заказе</returns>
         public string GetInfo()
         {
             return $"Заказ {FromLocation.ToString()} -> {ToLocation.ToString()}" +
                 $" ({OrderDistance} км) | {OrderPrice}";
         }
 
-        public bool PlanOrder()
+        /// <summary>
+        /// Базовый процесс планирования Заказа
+        /// </summary>
+        /// <returns></returns>
+        public bool PlanOrderAction()
         {
             //Подбираем подходящих курьеров
             var curriers = FindCurriers();
 
-            //Готовим место для ответов
+            //Готовим "место" для ответов вариантов от Курьеров
             var planningOptions = new List<PlanningOption>();
 
+            //Для каждого найденного курьера производится поиск варианта планирования
             foreach (var currier in curriers)
             {
                 //Спрашиваем курьреа о варианте планирования
-                var planningOption = currier.RequestPlanningOption(this);
+                var planningOption = currier.RequestPlanningOptionAction(this);
 
+                //Если курьер вернул предложение, добавляем вариант в список
                 if (planningOption != null)
                 {
                     planningOptions.Add(planningOption);
                 }
             }
 
+            //Если мы получили варианты от курьеров, то производим анализ
             if (planningOptions.Count() > 0)
             {
-                //Анализируем и выбираем
+                //Анализируем варианты и выбираем "лучший" для нас
                 var bestOption = GetBestOption(planningOptions);
 
+                //Если есть лучший вариант, то выбираем лучший
                 if (bestOption != null)
                 {
-                    bestOption.Curier.AcceptPlan(bestOption);
+                    bestOption.Curier.AcceptPlanAction(bestOption);
                     CurrentPlan = bestOption;
+
+                    return true;
                 }
             }
 
             return false;
         }
 
+        /// <summary>
+        /// Производит поиск курьеров для выполнения заказов
+        /// </summary>
+        /// <returns>Список подходящих курьеров</returns>        
         private IList<Curier> FindCurriers()
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Выбирает лучший для заказа вариант планирования
+        /// </summary>
+        /// <param name="options">Варианты размещения заказов</param>
+        /// <returns>Лучший вариант размещения</returns>
         private PlanningOption GetBestOption(IList<PlanningOption> options)
         {
             var sortedOption = options.OrderByDescending(option => option.Profit);
             var bestOption = sortedOption.FirstOrDefault(bestOption => bestOption.Profit > 0);
 
             return bestOption;
-        }
-
-        //public List<Curier> CurriersForOrder()
-        //{
-        //    var list = new List<Curier>();
-
-        //    var list2 = Company.Curiers.Where(cur => cur.CanCarry(this));
-
-        //    foreach (var currer in Company.Curiers)
-        //    {
-        //        if (currer.CanCarry(this))
-        //        {
-        //            list.Add(currer);
-        //        }
-        //    }
-
-        //    return list2.ToList();
-
-
-        //}
+        }        
     }
 }

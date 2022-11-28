@@ -67,7 +67,7 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
                 Console.WriteLine($"Планируется заказ: {orderForPlanning.GetInfo()}");
                 Console.WriteLine();
 
-                var result = orderForPlanning.PlanOrder();
+                var result = orderForPlanning.PlanOrderAction();
 
                 if (result)
                 {
