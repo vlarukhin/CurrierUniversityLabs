@@ -31,9 +31,14 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
         {
             if (!Orders.Contains(order))
             {
+                Console.WriteLine($"Появился новый заказ: {order.GetInfo()}");
+
                 Orders.Add(order);
 
-                NewOrderEvent.Invoke(this, 
+                //NewOrderEvent.BeginInvoke(this,
+                //   new OrderEventDescriptor { Order = order }, null, null);
+
+                NewOrderEvent.Invoke(this,
                     new OrderEventDescriptor { Order = order });
             }            
         }

@@ -60,6 +60,26 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
                 Name, Speed, CarryingCapacity, InitialLocation.ToString());
         }
 
+        public void Intilize()
+        {
+            Company.CompanyInstance.OrderDesk.NewOrderEvent += NewOrderEventComeEventHandler;
+        }
+
+        private void NewOrderEventComeEventHandler(object? sender, OrderEventDescriptor e)
+        {
+            Thread.Sleep(2000);
+
+            var order = e.Order;
+
+            Console.WriteLine($"Курьер {Name}: Получил событие появления Заказа: {order.GetInfo()}");
+
+            if (order != null && CanCarry(order))
+            {
+              var option = RequestPlanningOptionAction(order);
+              order.ReviewOffer(option);
+            }
+        }
+
         /// <summary>
         /// Действие по размещению заказа в плане курьера
         /// </summary>

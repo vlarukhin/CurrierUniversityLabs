@@ -81,12 +81,16 @@ namespace SimpleCurriersSchedulerStudyApp
             company.Curiers.Add(currier3);
             company.Curiers.Add(currier4);
 
+            currier1.Intilize();
+            currier2.Intilize();
+            currier3.Intilize();
+            currier4.Intilize();
             
             Console.WriteLine();
             company.PrintCuriers();
 
             Console.WriteLine("Ожидаем поступление заказов");
-                company.StartPlaner();
+            //company.StartPlaner();
                      
 
             company.OrderDesk.AddOrderToDesk(order1);

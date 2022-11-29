@@ -74,6 +74,8 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
                 $" ({OrderDistance} км) | {OrderPrice}";
         }
 
+        List<PlanningOption> _planningOptions = new List<PlanningOption>();
+
         /// <summary>
         /// Базовый процесс планирования Заказа
         /// </summary>
@@ -84,7 +86,7 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
             var curriers = FindCurriers();
 
             //Готовим "место" для ответов вариантов от Курьеров
-            var planningOptions = new List<PlanningOption>();
+            _planningOptions = new List<PlanningOption>();
 
             //Для каждого найденного курьера производится поиск варианта планирования
             foreach (var currier in curriers)
@@ -95,15 +97,15 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
                 //Если курьер вернул предложение, добавляем вариант в список
                 if (planningOption != null)
                 {
-                    planningOptions.Add(planningOption);
+                    _planningOptions.Add(planningOption);
                 }
             }
 
             //Если мы получили варианты от курьеров, то производим анализ
-            if (planningOptions.Count() > 0)
+            if (_planningOptions.Count() > 0)
             {
                 //Анализируем варианты и выбираем "лучший" для нас
-                var bestOption = GetBestOption(planningOptions);
+                var bestOption = GetBestOption(_planningOptions);
 
                 //Если есть лучший вариант, то выбираем лучший
                 if (bestOption != null)
@@ -125,7 +127,7 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
         private IList<Curier> FindCurriers()
         {
             var curriers = Company.CompanyInstance.GetAvailibleCurriers()
-                                .Where(x=>x.CanCarry(this));
+                                .Where(x => x.CanCarry(this));
 
             return curriers.ToList();
         }
@@ -141,6 +143,18 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
             var bestOption = sortedOption.FirstOrDefault(bestOption => bestOption.Profit > 0);
 
             return bestOption;
-        }        
+        }
+
+        internal void ReviewOffer(PlanningOption option)
+        {
+            if (!IsPlanned || CurrentPlan.Profit < option.Profit)
+            {
+                Console.WriteLine($"Заказ получил выгодное предложение {option.Profit}" +
+                    $" от курьера {option.Curier.Name}");
+
+                option.Curier.AcceptPlanAction(option);
+                CurrentPlan = option;
+            }
+        }
     }
 }

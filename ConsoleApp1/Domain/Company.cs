@@ -78,7 +78,7 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
         /// </summary>
         public void StartPlaner()
         {
-            OrderDesk.NewOrderEvent += NewOrderEventHandler;
+            //OrderDesk.NewOrderEvent += NewOrderEventHandler;
             //PrepareQueue();
             //PlanningCycle();
         }
