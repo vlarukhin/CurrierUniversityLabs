@@ -101,7 +101,7 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
         public FootCurier()
         {
             Speed = Company.DefaultFootCurierSpeed;
-            CurreierPrice = Company.PricePerDistance * 0.65;
+            CurreierPrice = Company.PricePerDistance * 0.45;
         }
     }
 
@@ -113,7 +113,7 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
         public MobileCurier()
         {
             Speed = Company.DefaultMobileCurierSpeed;
-            CurreierPrice = Company.PricePerDistance * 0.85;
+            CurreierPrice = Company.PricePerDistance * 0.55;
         }
     }
 

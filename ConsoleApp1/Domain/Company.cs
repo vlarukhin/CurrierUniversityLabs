@@ -110,8 +110,8 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
                     totalProfit += orderForPlanning.CurrentPlan.Profit;
 
                     Console.WriteLine($"Заказ запланирован: " +
-                        $"{orderForPlanning.CurrentPlan.Curier.ToString()}" +
-                        $" c прибылью: {orderForPlanning.CurrentPlan.Profit}");
+                        $"{orderForPlanning.CurrentPlan.Curier.Name}" +
+                        $" c прибылью: {Math.Round(orderForPlanning.CurrentPlan.Profit, 2)}");
                 }
                 else
                 {
@@ -119,7 +119,7 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
                 }
             }
 
-            Console.WriteLine($"Итоговая прибыль: {totalProfit}");
+            Console.WriteLine($"Итоговая прибыль: {Math.Round(totalProfit,2)}");
         }
 
         /// <summary>
