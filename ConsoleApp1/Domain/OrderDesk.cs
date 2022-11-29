@@ -38,6 +38,8 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
                 //NewOrderEvent.BeginInvoke(this,
                 //   new OrderEventDescriptor { Order = order }, null, null);
 
+
+
                 NewOrderEvent.Invoke(this,
                     new OrderEventDescriptor { Order = order });
             }            
