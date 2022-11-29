@@ -17,6 +17,12 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
 
         public const double DefaultMobileCurierSpeed = 8;
 
+        public OrderDesk OrderDesk { get; set; }
+
+        public Company()
+        {
+            OrderDesk = new OrderDesk();
+        }
 
         /// <summary>
         /// Курьеры
@@ -72,8 +78,34 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
         /// </summary>
         public void StartPlaner()
         {
-            PrepareQueue();
-            PlanningCycle();
+            OrderDesk.NewOrderEvent += NewOrderEventHandler;
+            //PrepareQueue();
+            //PlanningCycle();
+        }
+
+        private void NewOrderEventHandler(object? sender, OrderEventDescriptor e)
+        {
+            var order = e.Order;
+
+            if (order != null)
+            {
+                Console.WriteLine($"Планируется заказ: {order.GetInfo()}");
+                Console.WriteLine();
+
+                var result = order.PlanOrderAction();
+
+                if (result)
+                {
+                    Console.WriteLine($"Заказ запланирован: " +
+                        $"{order.CurrentPlan.Curier.Name}" +
+                        $" c прибылью: {Math.Round(order.CurrentPlan.Profit, 2)}");
+                }
+                else
+                {
+                    Console.WriteLine($"Заказ не запланирован");
+                }
+            }
+
         }
 
         /// <summary>

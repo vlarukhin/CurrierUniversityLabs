@@ -81,17 +81,22 @@ namespace SimpleCurriersSchedulerStudyApp
             company.Curiers.Add(currier3);
             company.Curiers.Add(currier4);
 
-            company.Orders.Add(order1);
-            company.Orders.Add(order2);
-            company.Orders.Add(order3);
-            company.Orders.Add(order4);
-            company.Orders.Add(order5);
-
-            company.PrintOrders();
+            
             Console.WriteLine();
             company.PrintCuriers();
 
-            company.StartPlaner();
+            Console.WriteLine("Ожидаем поступление заказов");
+                company.StartPlaner();
+                     
+
+            company.OrderDesk.AddOrderToDesk(order1);
+            company.OrderDesk.AddOrderToDesk(order2);
+            company.OrderDesk.AddOrderToDesk(order3);
+            company.OrderDesk.AddOrderToDesk(order4);
+            company.OrderDesk.AddOrderToDesk(order5);
+            
+
+            company.PrintOrders();
 
             Console.ReadKey();
         }
