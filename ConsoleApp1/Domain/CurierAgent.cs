@@ -96,9 +96,9 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
     /// <summary>
     /// Пеший курьер
     /// </summary>
-    internal class FootCurier : CurierAgent
+    internal class FootCurierAgent : CurierAgent
     {
-        public FootCurier()
+        public FootCurierAgent()
         {
             Speed = CompanyAgent.DefaultFootCurierSpeed;
             CurreierPrice = CompanyAgent.PricePerDistance * 0.25;
@@ -108,9 +108,9 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
     /// <summary>
     /// Мобильный курьер
     /// </summary>
-    internal class MobileCurier : CurierAgent
+    internal class MobileCurierAgent : CurierAgent
     {
-        public MobileCurier()
+        public MobileCurierAgent()
         {
             Speed = CompanyAgent.DefaultMobileCurierSpeed;
             CurreierPrice = CompanyAgent.PricePerDistance * 0.35;

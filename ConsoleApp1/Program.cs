@@ -9,7 +9,7 @@ namespace SimpleCurriersSchedulerStudyApp
         static void Main(string[] args)
         {
             var currier1 = new
-                FootCurier
+                FootCurierAgent
             {
                 Name = "Вася",
                 InitialLocation = Location.Create(5, 5),
@@ -17,7 +17,7 @@ namespace SimpleCurriersSchedulerStudyApp
             };
 
             var currier2 = new
-                FootCurier
+                FootCurierAgent
             {
                 Name = "Петя",
                 InitialLocation = Location.Create(3, 3),
@@ -25,7 +25,7 @@ namespace SimpleCurriersSchedulerStudyApp
             };
 
             var currier3 = new
-                MobileCurier
+                MobileCurierAgent
             {
                 Name = "Коля",
                 InitialLocation = Location.Create(1, 1),
@@ -33,7 +33,7 @@ namespace SimpleCurriersSchedulerStudyApp
             };
 
             var currier4 = new
-                MobileCurier
+                MobileCurierAgent
             {
                 Name = "Нина",
                 InitialLocation = Location.Create(3, 3),
