@@ -9,9 +9,9 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
     /// <summary>
     /// Курьерская компания, которая выполняет заказы на перевозку грузов своими курьерами
     /// </summary>
-    internal class Company
+    internal class CompanyAgent
     {
-        public const double PricePerDistance = 100;
+        public const double PricePerDistance = 150;
 
         public const double DefaultFootCurierSpeed = 4;
 
@@ -21,24 +21,24 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
         /// <summary>
         /// Курьеры
         /// </summary>
-        public HashSet<Curier> Curiers { get; set; } = new HashSet<Curier>();
+        public HashSet<CurierAgent> Curiers { get; set; } = new HashSet<CurierAgent>();
 
         /// <summary>
         /// Очередь поступающих заказов
         /// </summary>
-        public Queue<Order> OrdersQueue { get; set; } = new Queue<Order>();
+        public Queue<OrderAgent> OrdersQueue { get; set; } = new Queue<OrderAgent>();
 
         /// <summary>
         /// Заказы компании
         /// </summary>
-        public HashSet<Order> Orders { get; set; } = new HashSet<Order>();
+        public HashSet<OrderAgent> Orders { get; set; } = new HashSet<OrderAgent>();
 
 
         /// <summary>
         /// Получает множество доступных на текущий момент курьеров
         /// </summary>
         /// <returns>Множество доступных курьеров</returns>
-        public HashSet<Curier> GetAvailibleCurriers()
+        public HashSet<CurierAgent> GetAvailibleCurriers()
         {
             return Curiers;
         }
@@ -125,18 +125,18 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
         /// <summary>
         /// Экземпляр компании (внутренее поле)
         /// </summary>
-        private static Company _instance;
+        private static CompanyAgent _instance;
 
         /// <summary>
         /// Экземпляр компании
         /// </summary>
-        public static Company CompanyInstance
+        public static CompanyAgent CompanyInstance
         {
             get
             {
                 if (_instance == null)
                 {
-                    _instance = new Company();
+                    _instance = new CompanyAgent();
                 }
 
                 return _instance;

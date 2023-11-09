@@ -10,7 +10,7 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
     /// <summary>
     /// Курьер, способный выполнять заказы на доставку грузов
     /// </summary>
-    internal abstract class Curier
+    internal abstract class CurierAgent
     {
         /// <summary>
         /// Наимеование курьера, например ФИО
@@ -42,7 +42,7 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
         /// </summary>
         /// <param name="order">Заказ на перемещение неоторого груза</param>
         /// <returns>Истина, если курьер способен выполнить заказ, ложь - в других случаях</returns>
-        public bool CanCarry(Order order)
+        public bool CanCarry(OrderAgent order)
         {
             return CarryingCapacity >= order.Weigth;
         }
@@ -74,7 +74,7 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
         /// </summary>
         /// <param name="order">Заказ, рассматриваемый к размещению в плане</param>
         /// <returns>Вариант размещения, включающий оценки</returns>        
-        internal PlanningOption RequestPlanningOptionAction(Order order)
+        internal PlanningOption RequestPlanningOptionAction(OrderAgent order)
         {
             var planningOption = new PlanningOption();
 
@@ -91,29 +91,29 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
         }
 
 
-        private LinkedList<Order> ScheduledOrder = new LinkedList<Order>();
+        private LinkedList<OrderAgent> ScheduledOrder = new LinkedList<OrderAgent>();
     }
     /// <summary>
     /// Пеший курьер
     /// </summary>
-    internal class FootCurier : Curier
+    internal class FootCurier : CurierAgent
     {
         public FootCurier()
         {
-            Speed = Company.DefaultFootCurierSpeed;
-            CurreierPrice = Company.PricePerDistance * 0.45;
+            Speed = CompanyAgent.DefaultFootCurierSpeed;
+            CurreierPrice = CompanyAgent.PricePerDistance * 0.25;
         }
     }
 
     /// <summary>
     /// Мобильный курьер
     /// </summary>
-    internal class MobileCurier : Curier
+    internal class MobileCurier : CurierAgent
     {
         public MobileCurier()
         {
-            Speed = Company.DefaultMobileCurierSpeed;
-            CurreierPrice = Company.PricePerDistance * 0.55;
+            Speed = CompanyAgent.DefaultMobileCurierSpeed;
+            CurreierPrice = CompanyAgent.PricePerDistance * 0.35;
         }
     }
 

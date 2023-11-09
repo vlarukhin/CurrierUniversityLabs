@@ -14,12 +14,12 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
         /// <summary>
         /// Заказ
         /// </summary>
-        public Order Order { get; set; }
+        public OrderAgent Order { get; set; }
 
         /// <summary>
         /// Курьер
         /// </summary>
-        public Curier Curier { get; set; }
+        public CurierAgent Curier { get; set; }
 
         /// <summary>
         /// Себестоимость выполнения заказа Курьром

@@ -40,42 +40,42 @@ namespace SimpleCurriersSchedulerStudyApp
                 CarryingCapacity = 2
             };
 
-            var order1 = new Order
+            var order1 = new OrderAgent
             {
                 FromLocation = Location.Create(3, 3),
                 ToLocation = Location.Create(2, 2),
                 Weigth = 5
             };
 
-            var order2 = new Order
+            var order2 = new OrderAgent
             {
                 FromLocation = Location.Create(5, 5),
                 ToLocation = Location.Create(5, 1),
-                Weigth = 10
+                Weigth = 4
             };
 
-            var order3 = new Order
+            var order3 = new OrderAgent
             {
                 FromLocation = Location.Create(1, 5),
                 ToLocation = Location.Create(1, 1),
                 Weigth = 3
             };
 
-            var order4 = new Order
+            var order4 = new OrderAgent
             {
                 FromLocation = Location.Create(2, 2),
                 ToLocation = Location.Create(3, 3),
                 Weigth = 3
             };
 
-            var order5 = new Order
+            var order5 = new OrderAgent
             {
                 FromLocation = Location.Create(1, 5),
                 ToLocation = Location.Create(5, 1),
-                Weigth = 10
+                Weigth = 2
             };
 
-            var company = Company.CompanyInstance;
+            var company = CompanyAgent.CompanyInstance;
             company.Curiers.Add(currier1);
             company.Curiers.Add(currier2);
             company.Curiers.Add(currier3);

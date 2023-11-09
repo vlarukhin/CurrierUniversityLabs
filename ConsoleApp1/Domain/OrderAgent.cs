@@ -9,7 +9,7 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
     /// <summary>
     /// Базовый заказ на перемещение груза, который может быть выполнен курьером
     /// </summary>
-    internal class Order
+    internal class OrderAgent
     {
         /// <summary>
         /// Отправная точка заказа
@@ -61,7 +61,7 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
         /// <returns>Стоимость выполнения заказа по тарифу компании</returns>
         private double GetOrderPrice()
         {
-            return OrderDistance * Company.PricePerDistance;
+            return OrderDistance * CompanyAgent.PricePerDistance;
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
         public string GetInfo()
         {
             return $"Заказ {FromLocation.ToString()} -> {ToLocation.ToString()}" +
-                $" ({OrderDistance} км) | {OrderPrice}";
+                $" ({OrderDistance} км / {Weigth} кг) | Цена: {OrderPrice}";
         }
 
         /// <summary>
@@ -122,9 +122,9 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
         /// Производит поиск курьеров для выполнения заказов
         /// </summary>
         /// <returns>Список подходящих курьеров</returns>        
-        private IList<Curier> FindCurriers()
+        private IList<CurierAgent> FindCurriers()
         {
-            var curriers = Company.CompanyInstance.GetAvailibleCurriers()
+            var curriers = CompanyAgent.CompanyInstance.GetAvailibleCurriers()
                                 .Where(x=>x.CanCarry(this));
 
             return curriers.ToList();
