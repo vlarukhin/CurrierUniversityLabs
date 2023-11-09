@@ -47,8 +47,17 @@ namespace SimpleCurriersSchedulerStudyApp.Domain
         }
     }
 
+    /// <summary>
+    /// Утилиты для работы с локациями
+    /// </summary>
     public static class LocationHelper
     {
+        /// <summary>
+        /// Расчет расстояния между двумя точками по прямой
+        /// </summary>
+        /// <param name="from">Откуда</param>
+        /// <param name="destination">Куда</param>
+        /// <returns>Растояние</returns>
         public static double GetDistance(this Location from, Location destination)
         {
             return Math.Round(Math.Pow(
